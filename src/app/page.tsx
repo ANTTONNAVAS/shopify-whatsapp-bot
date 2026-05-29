@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type Message = {
   id: string;
@@ -25,31 +25,30 @@ export default function Dashboard() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const fetchConversations = async () => {
+  const fetchConversations = useCallback(async () => {
     const res = await fetch("/api/conversations");
     const data = await res.json();
     setConversations(data);
-  };
+  }, []);
 
-  const fetchMessages = async (id: string) => {
+  const fetchMessages = useCallback(async (id: string) => {
     const res = await fetch(`/api/conversations/${id}`);
     const data = await res.json();
     setMessages(data);
-  };
+  }, []);
 
   useEffect(() => {
     fetchConversations();
     const interval = setInterval(fetchConversations, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [fetchConversations]);
 
   useEffect(() => {
     if (!selected) return;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     fetchMessages(selected);
     const interval = setInterval(() => fetchMessages(selected), 3000);
     return () => clearInterval(interval);
-  }, [selected]);
+  }, [selected, fetchMessages]);
 
   const selectedConv = conversations.find((c) => c.id === selected);
 
