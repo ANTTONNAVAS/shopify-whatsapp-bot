@@ -45,8 +45,9 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!selected) return;
-    fetchMessages(selected);
-    const interval = setInterval(() => fetchMessages(selected), 3000);
+    const load = () => { fetchMessages(selected); };
+    load();
+    const interval = setInterval(load, 3000);
     return () => clearInterval(interval);
   }, [selected, fetchMessages]);
 
