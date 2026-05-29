@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/prisma";
 import { generateBotResponse } from "@/lib/anthropic";
 import { sendWhatsAppMessage } from "@/lib/whatsapp";
