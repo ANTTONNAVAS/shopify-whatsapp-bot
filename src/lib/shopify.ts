@@ -19,6 +19,7 @@ export async function getOrderByName(orderName: string) {
   return data.orders[0] ?? null;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function formatOrderStatus(order: any): string {
   const fulfillment = order.fulfillment_status ?? "sin procesar";
   const financial = order.financial_status;

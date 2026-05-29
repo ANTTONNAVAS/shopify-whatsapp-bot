@@ -45,6 +45,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!selected) return;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     fetchMessages(selected);
     const interval = setInterval(() => fetchMessages(selected), 3000);
     return () => clearInterval(interval);
